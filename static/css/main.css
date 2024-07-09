@@ -1,0 +1,123 @@
+.img_profile{
+    
+    height: 140px;
+    width: 140px;
+    margin: 20px;
+    border-radius: 50%;
+}
+
+.edit_profile{
+    display: none;
+    position: fixed;
+    top: 0%;                    
+    left: 0%;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(60, 58, 58, 0.848);
+    
+}
+
+.subblock{
+    position: absolute;
+    top: 20%;
+    left: 30%;
+    border: 1px solid whitesmoke;
+    padding: 20px;
+    background-color: black;
+    color: whitesmoke;
+}
+
+.post_pic{
+    height: 100px;
+    width: 100px;
+}
+
+
+.post_struct{
+    margin: 10px;
+    border: 1px solid black;
+    padding: 10px;
+    height: fit-content;
+    width: fit-content;
+}
+
+
+.post_popup{
+    display: none;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+}
+
+.post_sub{
+    width: fit-content;
+    height: fit-content;
+    background-color: black;
+    padding: 20px;
+    color: whitesmoke;
+}
+
+
+.popup_sub{
+    background-color: rgba(60, 58, 58, 0.848);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+}
+
+label{
+    margin: 10px;
+
+}
+
+input{
+    margin: 10px;
+    background: transparent;
+    border: transparent;
+    border-bottom: 1px solid whitesmoke;
+    color: whitesmoke;
+}
+
+.camera_logo{
+    height: 100px;
+    width: 100px;
+}
+
+
+button{
+    margin: 10px;
+}
+
+img{
+    margin: 10px;
+}
+
+
+.close{
+    background: transparent;
+    border: transparent;
+}
+
+.add_display{
+    width: 100vw;
+    height: 100vh;
+    background-color: aqua;
+    position: relative;
+}
+
+
+
+.main{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.main1{
+    border-right: 1px solid black;
+    padding-right: 20px ;
+}

@@ -1,0 +1,74 @@
+.container{
+    padding: 0%;
+    margin: 0%;
+}
+
+.login_dull{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    filter: blur(3px);
+}
+
+.main{
+    padding: 0%;
+}
+
+.block1{
+    position: absolute;
+    padding: 10px;
+    border: 1px solid black;
+    top: 20%;
+    left: 34%;
+    background-color: rgba(174, 176, 192, 0.477);
+    
+}
+
+
+input{
+    background: transparent;
+    border: transparent;
+    border-bottom: 1px solid black;
+    color: black;
+    padding: 5px;
+    margin:10px ;
+
+}
+
+label{
+    margin : 10px;
+}
+
+button{
+    padding: 5px;
+    margin: 10px;
+    border-radius: 30px;
+    background: transparent;
+    border: 1px solid rgb(11, 42, 110);
+    transition: 100ms;
+}
+
+
+button:hover{
+    transition: 100ms;
+    background-color: black;
+    border: 1px solid rgb(66,187,215);
+    color: rgb(66,187,215);
+    
+}
+
+
+
+span{
+
+    background-color: rgba(0, 0, 0, 0.393);
+    color: whitesmoke;
+    padding: 2px;
+    border-radius: 5px;
+    transition: 100ms;
+}
+
+
+a{
+    color: blue;
+}

@@ -1,0 +1,386 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Social Media</title>
+        <link rel="stylesheet" href="static/css/home_page.css">
+    </head>
+    <body class="container">
+
+        
+
+        <div class="user">
+            <button class="user_button">
+                Welcome,
+                {{ user.first_name }}
+                {{ user.last_name }}
+            </button>
+        </div>
+        
+
+        <div class="main">
+
+
+            <div class="main1">
+                
+
+                <div class="buttons">
+
+
+                <div>
+                    <form method="post" action="{% url 'Social_Media' %}">
+                        {% csrf_token %}
+
+                        <input type="hidden" value="{{ user.pk }}" name="id_of_user">
+                        <button  class="main1_buttons">
+                            Home
+                        </button>
+                    </form>
+                </div>
+
+
+                    <form method="post" action="{% url 'search' %}">
+                        {% csrf_token %}
+
+                        <input type="hidden" value="{{ user.pk }}" name="id_of_user">
+                        <button class="main1_buttons">
+                            Search
+                        </button>
+                    </form>
+                        
+                    <form method="post" action="{% url 'reels' %}">
+                        {% csrf_token %}
+
+                        <input type="hidden" value="{{ user.pk }}" name="id_of_user">
+                        <button class="main1_buttons">
+                            Reels
+                        </button>
+                    </form>
+                    
+
+
+                    <button class="main1_buttons" onclick="openDiv()">
+                        +Create
+                    </button>
+                        
+
+                    
+                    <form method="post" action="{% url 'profile_sub' %}">
+                        {% csrf_token %}
+
+                        <input type="hidden" value="{{ user.pk }}" name="id_of_user">
+                        <button class="main1_buttons">
+                            Profile
+                        </button>
+                    </form>
+
+                </div>
+
+
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+
+
+                <button class="main1_buttons">
+                    Log Out
+                </button>
+                </form>
+            </div>
+
+
+
+
+            <div class="main2">
+                <div class="feed">
+                    <center>
+                        <div class="post_main">
+                            {% for n in post_exclude %}
+            
+                            <article class="post">
+                                <form action="{% url 'visit_profile' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" value="{{ n.post_no.pk }}" name="user_id">
+                                    <input type="hidden" value="{{ user.pk }}" name="login_user_id">
+                                    <button style="margin-bottom: 5px; background: transparent; border: none; color: blue; width: 100%; display: flex; justify-content: left;">
+                                        From, {{ n.post_no.username }}
+                                    </button>
+                                </form>
+                    
+                                <img src="{{ n.post_file.url }}" alt="{{ n.caption }}">
+                                <p style="display: flex; justify-content: left; margin: 5px;">{{ n.caption }}</p>
+                    
+                                <div style="display: flex; justify-content: space-between;">
+                                    <p style="padding: 5px; font-size: small;">{{ n.created_time }}</p>
+                    
+                                    <div>
+            
+                                        <form action="{% url 'like'%}" method="post">
+                                            {% csrf_token %}
+            
+                                            <input type="hidden" value="{{ user.pk }}" name="user_id">
+                                            <input type="hidden" value="{{ n.pk }}" name="post_id">
+                                            <button aria-label="Like">
+                                                ❤️
+                                            </button>
+            
+                                        </form>
+            
+                                        <button data-post-id="{{ n.pk }}" class="comments_button" onclick="open_comments_box(event)" aria-label="Comments">💬</button>
+                                        
+                                        <button>➢</button>
+                                    </div>
+                                </div>
+                                <div style="display: flex; justify-content: right;padding: 10px;">
+                                    {{ n.no_of_likes }}  Likes
+                                </div>
+                            </article>
+                    
+                            <div class="comment_block" id="comment_block_{{ n.pk }}" style="display: none;">
+                                <div class="main2_submain">
+                                    <div class="comments_box">
+                                        <div class="add_comment_block">
+                                            <p style="display: flex; justify-content: left;">
+                                                <button class="add_comments" onclick="add_comments({{ n.pk }})">
+                                                    Add Comments
+                                                </button>
+                                            </p>
+
+
+
+                                            <div style="display: none;" id="comment_post_{{ n.pk }}">
+                                                <form action="{% url 'post_comments' %}" method="post">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" value="{{ user.pk }}" name="user">
+                                                    <input type="hidden" value="{{ n.pk }}" name="post_id">
+                                                    <input type="text" name="comment" placeholder="Write a comment...">
+                                                    <button type="submit" onclick="comments_done()">Submit</button>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                        
+                                        <p style="display: flex; justify-content: right; align-items: center;">
+                                            <button onclick="close_comments_box({{ n.pk }})" style="background-color: transparent; border: transparent;">
+                                                ❎
+                                            </button>
+                                        </p>
+            
+                                        <div style="display: flex; justify-content: space-between; gap: 20px;">
+                                            <div class="post_comments">
+                                                <img src="{{ n.post_file.url }}" alt="" style="height: 100%; width: 100%;">
+                                            </div>
+
+                                            
+            
+                                            <div class="comments" id="comments_{{ n.pk }}">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </center>
+                </div>
+            </div>
+            
+
+           
+             
+            
+            <div class="main3">
+
+                {% for n in user_except %}
+
+
+
+
+               
+
+                        <div class="friends">
+                        
+                            <div class="info">
+                                <name style="font-size: smaller;">{{ n.first_name}} {{ n.last_name}}</name>
+                                <br>
+
+                                <form action="{% url 'visit_profile' %}" method="post">
+                                    {% csrf_token %}
+
+                                    <input type="hidden" value="{{ n.pk }}" name="user_id">
+                                    <input type="hidden" value="{{ user.pk }}" name="login_user_id">
+
+                                    <button style="font-size: x-small;color: grey;background-color: transparent;border: transparent;">
+                                        {{ n.username }}
+                                    </button>
+                                </form>
+                            </div>
+
+
+                            <p style="display: flex;justify-content: left;width: 100%;"></p>
+
+
+
+                            <div style="display: flex;align-items: center;">
+
+                                <form action="{% url 'unfollow' %}" method="post">
+                                    {% csrf_token %}
+
+                                    <input type="hidden" name="user_id" value="{{ user.pk }}">
+                                    <input type="hidden" name="follow_id" value="{{ n.pk }}">
+
+
+                                <button>
+                                    Unfollow
+                                </button>
+
+                                </form>
+
+                                <form action="{% url 'follow' %}" method="post">
+                                    {% csrf_token %}
+
+                                    <input type="hidden" name="user_id" value="{{ user.pk }}">
+                                    <input type="hidden" name="follow_id" value="{{ n.pk }}">
+
+
+                                <button>
+                                    Follow
+                                </button>
+
+
+                                </form>
+                            </div>
+                        </div>
+
+                </form>
+
+
+                
+
+
+
+        
+
+
+                {% endfor %}
+            </div>
+
+            
+        </div>
+
+
+
+
+
+
+
+
+
+        <div class="post_popup" id="post_popup">
+    
+            <div class="popup_sub">
+
+                <div class="post_sub">
+
+
+                <div style="display: flex;justify-content: right;">
+                    <button onclick="closePost()" class="close">
+                        ❎
+                    </button>
+                </div>
+                <form action="{% url 'save_posts' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div>
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+
+                            <input type="hidden" value="{{ user.pk }}" name="u_id">
+
+                            <div style="border: 1px solid whitesmoke;">
+                                <img src="static/img/camera.png" alt="" class="camera_logo">
+                            </div>
+                            <div style="margin: 20px">
+                                <label for="post_file">Add Post From Internal :</label>
+                                <br>
+                                <input type="file" name="post_file">
+                                <br><hr><br>
+                                <label for="caption">Caption :</label>
+                                <input type="text" name="caption">
+                                <button type="submit">Upload</button>
+       
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+
+
+        
+
+
+
+        
+
+           
+
+        
+
+    </body>
+    <script src="/static/js/home_page.js">
+
+    </script>
+    </html>
+
+
+<!-- 
+
+
+    <div class="comments_box" id="comments_box_{{ n.pk }}" style="display: none;position: absolute;top: 0%;background-color: rgba(60, 58, 58, 0.848);height: 100%;width: 100%;">
+
+        <p style="display: flex;justify-content: right;">
+            <button onclick="close_comments_box()">
+                ❎
+            </button>
+        </p>
+        <div style="display: flex;justify-content: center;align-items: center">
+            
+
+        <form action="{% url 'view_comments' %}" method="post">
+            {% csrf_token %}
+
+            <input type="hidden" value="{{ n.pk }}" name="receive_post_id">
+            <input type="hidden" value="{{ user.pk }}" name ="user_id">
+            <button style="display: flex;width: 100%;justify-content: left;background-color: transparent;border: transparent;color: blue;">
+                View Comments:
+            </button>
+
+        </form>
+
+        {% for m in comment_posts %}
+
+            <p style="font-size: small;display: flex;flex-direction: column;align-items: start;" >
+                ---{{ m.comments }}
+            </p>
+
+        {% endfor %}
+        </div>
+
+    </div>
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                 

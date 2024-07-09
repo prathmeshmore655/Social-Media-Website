@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visited Profile</title>
+    <link rel="stylesheet" href="static/css/reels.css">
+</head>
+
+
+<body class="container">
+
+    <div class="user">
+        <label for="" style="color: black;" class="user_button">
+            Welcome,
+            {{ login_user.first_name}}
+            {{ login_user.last_name}}
+        </label>
+    </div>
+    
+
+    <div class="main">
+
+
+        <div class="main1">
+            
+
+            <div class="buttons">
+
+
+                <div>
+                    <form method="post" action="{% url 'Social_Media' %}">
+                        {% csrf_token %}
+
+                        <input type="hidden" value="{{ login_user.pk }}" name="id_of_user">
+                        <button  class="main1_buttons">
+                            Home
+                        </button>
+                    </form>
+                </div>
+
+
+                    <form method="post" action="{% url 'search' %}">
+                        {% csrf_token %}
+
+                        <input type="hidden" value="{{ login_user.pk }}" name="id_of_user">
+                        <button class="main1_buttons">
+                            Search
+                        </button>
+                    </form>
+                        
+                    <form method="post" action="{% url 'reels' %}">
+                        {% csrf_token %}
+
+                        <input type="hidden" value="{{ login_user.pk }}" name="id_of_user">
+                        <button class="main1_buttons">
+                            Reels
+                        </button>
+                    </form>
+                    
+
+                    
+                    <button class="main1_buttons" onclick="openDiv()">
+                        +Create
+                    </button>
+                        
+
+                    
+                    <form method="post" action="{% url 'profile_sub' %}">
+                        {% csrf_token %}
+
+                        <input type="hidden" value="{{ login_user.pk }}" name="id_of_user">
+                        <button class="main1_buttons">
+                            Profile
+                        </button>
+                    </form>
+
+                </div>
+
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+
+                    
+                <button class="main1_buttons">
+                    Log Out
+                </button>
+                </form>
+        </div>
+
+
+
+        <div class="main2">
+            
+
+            <div class="reel_block">
+
+                    {% for j in reels %}
+
+                        
+
+                    <form action="{% url 'visit_profile' %}" method="post">
+                        {% csrf_token %}
+
+                        <input type="hidden" value="{{ j.reels_no.id }}" name="user_id">
+                        <input type="hidden" value="{{ login_user.id }}" name="login_user_id">
+                    
+                        <button id="username">
+                            From, {{ j.reels_no.username }}
+                        </button>
+                    
+                    </form>
+
+                        <video  controls src="{{ j.reel_video.url }}" type="video/mp4" class="reel"  loop autoplay muted>
+                        </video>
+                    
+
+                    {% endfor %}
+
+            </div>
+            
+        </div>
+
+        
+
+
+
+
+
+
+        <div class="main3">
+
+
+        <div class="reel_form">
+            
+        <div class="img">
+            <img src="/static/img/camera.png" alt="" class="camera_png">
+        </div>
+
+            <form action="{% url 'upload_reel' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+
+                <input type="hidden" value="{{ login_user.pk }}" name="user_id">
+                <label for="" class="video">Add Reels :</label>
+
+                <br>
+
+                <input type="file" name="video" accept="video/*" class="video" required>
+                <br>
+
+                <label for="" class="video">Caption :</label>
+                <br>
+                <input type="text" name="caption" class="video">
+                <br>
+                <button class="video">
+                    Upload
+                </button>
+            </form>
+
+        </div>
+            
+        </div>
+
+
+    </div>
+
+    <div class="post_popup" id="post_popup">
+    
+        <div class="popup_sub">
+
+            <div class="post_sub">
+
+
+            <div style="display: flex;justify-content: right;">
+                <button onclick="closePost()" class="close">
+                    ❎
+                </button>
+            </div>
+            <form action="{% url 'save_posts' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div>
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+
+                        <input type="hidden" value="{{ login_user.pk }}" name="u_id">
+
+                        <div style="border: 1px solid whitesmoke;">
+                            <img src="static/img/camera.png" alt="" class="camera_logo">
+                        </div>
+                        <div style="margin: 20px;">
+                            <label for="post_file">Add Post From Internal :</label>
+                            <br>
+                            <input type="file" name="post_file">
+                            <br><hr><br>
+                            <label for="caption">Caption :</label>
+                            <input type="text" name="caption">
+                            <button type="submit">Upload</button>
+   
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+   
+    
+</body>
+
+
+<script src="static/js/search.js">
+
+</script>
+</html>

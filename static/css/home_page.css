@@ -1,0 +1,309 @@
+.container{
+    padding: 0%;
+    margin: 0%;
+    background-color: darkgrey;
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+   
+}
+
+.user_button{
+    position: absolute;
+    top: 1%;
+    right: 1%;
+    width: auto;
+    height: 4%;
+    border-radius: 20px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.main{
+    height: 90%;
+    width: 100vw;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 10px 3px 10px #000000, -3px -3px 5px #888888;  
+    position:absolute;  
+}
+
+.main1{
+    background-color: #0b1f31;
+    width: 15%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    
+}
+
+
+
+
+
+.main1_buttons{
+    
+    padding: 10px;
+    background-color: transparent;
+    font-size: larger;
+    color: aliceblue;
+    width: 100%;
+    border: transparent;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: 300ms;
+    
+}
+
+
+form{
+    width: 100%;
+}
+
+
+.buttons{
+    width: 100%;
+}
+
+.main1_buttons:hover{
+
+    transition: 100ms;
+    border:1px solid whitesmoke ;
+    background-color: aliceblue;
+    color: black;
+    
+}
+
+
+.main3{
+    height: 100%;
+    width: 20%;
+    background-color: #0b1f31;
+    color: whitesmoke;
+}
+
+
+.friends{
+    margin: 5px;
+    background-color: whitesmoke;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 10px;
+}
+
+.friends button{
+    background-color: rgb(25, 86, 176);
+    padding-right: 10px;
+    padding-left: 10px;
+    color: whitesmoke;
+    border-radius: 20px;
+}
+
+.main2 {
+    width: 50%;
+    height: 80vh;
+    border: 1px solid black; 
+    overflow-y: auto; 
+    padding: 20px; 
+    box-sizing: border-box;
+    background-color: aliceblue;
+}
+
+
+.feed {
+    margin-bottom: 20px; 
+    
+}
+
+.post{
+    width: 60%;
+    min-height: 600px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid black;
+    box-shadow: 3px 3px 10px #888888;
+    margin-bottom: 30px;
+    padding-bottom: 5px;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+.post img{
+
+    width: 100%;
+    height: 500px;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+}
+
+
+.post button{
+    margin: 5px;
+}
+
+
+
+.img_profile{
+    
+    height: 140px;
+    width: 140px;
+    margin: 20px;
+    border-radius: 50%;
+}
+
+.edit_profile{
+    display: none;
+    position: fixed;
+    top: 0%;                    
+    left: 0%;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(60, 58, 58, 0.848);
+    
+}
+
+.subblock{
+    position: absolute;
+    top: 20%;
+    left: 30%;
+    border: 1px solid whitesmoke;
+    padding: 20px;
+    background-color: black;
+    color: whitesmoke;
+}
+
+.post_pic{
+    height: 100px;
+    width: 100px;
+}
+
+
+.post_struct{
+    margin: 10px;
+    border: 1px solid black;
+    padding: 10px;
+    height: fit-content;
+    width: fit-content;
+}
+
+
+.post_popup{
+    display: none;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+}
+
+.post_sub{
+    width: fit-content;
+    height: fit-content;
+    background-color: black;
+    padding: 20px;
+    color: whitesmoke;
+}
+
+
+.popup_sub{
+    background-color: rgba(60, 58, 58, 0.848);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+}
+
+
+
+
+
+
+.camera_logo{
+    height: 100px;
+    width: 100px;
+}
+
+
+
+
+
+
+
+.close{
+    background: transparent;
+    border: transparent;
+}
+
+.add_display{
+    width: 100vw;
+    height: 100vh;
+    background-color: aqua;
+    position: relative;
+}
+
+
+
+.main{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.main1{
+    border-right: 1px solid black;
+    padding-right: 20px ;
+}
+
+.comment_block{
+
+    display: none;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(60, 58, 58, 0.848);
+    position: fixed;
+    top: 0%;
+    left: 0%;
+}
+
+
+.main2_submain{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.comments_box{
+
+    width: 70%;
+    padding: 20px;
+    margin: 10px;
+    background-color: whitesmoke;
+    min-height: 50%;
+}
+
+.comments{
+    width: 50%;
+background-color: white;    border: 1px solid black;
+    padding: 10px;
+    color: black;
+}
+
+
+.post_comments{
+    background-color: #888888;
+    width: 50%;
+    height: 100%;
+    border: 1px solid black;
+    overflow-y: scroll;
+}

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media</title>
+    <link rel="stylesheet" href="static/css/main.css">
+</head>
+
+<body class="container">
+
+
+    <div class="main">
+
+
+
+        <div class="main1">
+
+
+    <img src="{% if profile.profile_picture %}{{ profile.profile_picture.url }}{% else %}static/img/profile.jpg{% endif %}" alt="Profile Picture" class="img_profile">
+    <br>
+    <label for="username">Username :</label>
+    {{ user.username }}
+    <br>
+    <label for="bio">Bio :</label>
+    {{ profile.bio }}
+    <br>
+    <label for="followers">Followers :</label>
+    {{ profile.followers }}
+    <br>
+    <label for="following">Following :</label>
+    {{ profile.following }}
+    <br>
+
+    <button onclick="view_edit_profile()">Edit Profile</button>
+    <br>
+    <button onclick="openDiv()">Add Post</button>
+    <br><br>
+
+    
+
+
+
+
+
+
+    <label for="posts">Posts :</label>
+    <br>
+    {% if post %}
+    {% for n in post %}
+        <div class="post_struct">
+            {% if n.post_file %}
+                <img src="{{ n.post_file.url }}" alt="Post Image" class="post_pic">
+            {% else %}
+               
+            {% endif %}
+            
+            <br>
+            <label for="caption">Caption : </label> {{ n.caption }}
+            <br>
+            <label for="uploaded_on">Uploaded On :</label> {{ n.created_time }}
+            <br>
+            <form action="{% url 'delete_post' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="user" value="{{ n.post_no_id }}">
+                <input type="hidden" name="post_id" value="{{ n.pk }}">
+                <button type="submit">🗑</button>
+            </form>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="post_struct">
+        <p>No posts available.</p>
+    </div>
+{% endif %}
+
+
+
+
+
+
+<div class="edit_profile" id="view_block" style="display:none;">
+
+    <div class="subblock">
+       
+        <div style="display: flex;justify-content: right;">
+            <button onclick="closeDiv()" class="close">
+                ❎
+            </button>
+
+        </div>
+    <form action="{% url 'update_profile' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div style="display: flex;">
+
+            <div style="padding: 10px;border: 1px solid whitesmoke;">
+            
+               
+                <br>
+                <center>
+                    <input type="hidden" name="profile_id" value="{{ profile.user_id }}">
+                    <img src="{% if profile.profile_picture %}{{ profile.profile_picture.url }}{% else %}static/img/profile.jpg{% endif %}" alt="Profile Picture" class="img_profile">
+                        <br>
+                    <input type="file" class="img_upload" name="profile_photo">
+                </center>
+            </div>
+                <div>
+                    <label for="username">Username :</label>
+                    <input type="text" id="username" value="{{ user.username }}" name="username">
+                    <br>
+                    <br>
+                    <hr>
+                    <br>
+                    <label for="bio">Bio :</label>
+                    <textarea id="bio" name="bio">{{ profile.bio }}</textarea>
+                    <br>
+                    <br>
+                    <hr>
+                    <br>
+                    <center>
+
+                        <button type="submit" onclick="closeDiv()">
+                            Submit
+                        </button>
+                    </center>
+                </div>
+            </div>
+        </div>
+        
+    </form>
+
+</div>
+
+    <input type="hidden" name="profile_id" value="{{ profile.user_id }}">
+
+
+    <div class="post_popup" id="post_popup">
+
+            <div class="popup_sub">
+
+                <div class="post_sub">
+
+
+                <div style="display: flex;justify-content: right;">
+                    <button onclick="closePost()" class="close">
+                        ❎
+                    </button>
+                </div>
+                <form action="{% url 'save_posts' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div>
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+
+                            <input type="hidden" value="{{ user.pk }}" name="u_id">
+
+                            <div style="border: 1px solid whitesmoke;">
+                                <img src="static/img/camera.png" alt="" class="camera_logo">
+                            </div>
+                            <div style="margin: 20px;">
+                                <label for="post_file">Add Post From Internal :</label>
+                                <br>
+                                <input type="file" name="post_file">
+                                <br><hr><br>
+                                <label for="caption">Caption :</label>
+                                <input type="text" name="caption">
+                                <button type="submit">Upload</button>
+       
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+<div class="main2">
+
+    Hello World
+</div>
+
+
+<div class="main3">
+    Hello World
+</div>
+
+</div>
+
+
+</body>
+<script src="static/js/main.js"></script>
+</html>

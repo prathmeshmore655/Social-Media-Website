@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media</title>
+    <link rel="stylesheet" href="static/css/profile.css">
+</head>
+<body class="container">
+
+    <div class="user">
+        <label for="" style="color: black;" class="user_button">
+            Welcome,
+            {{ user.first_name}}
+            {{ user.last_name}}
+        </label>
+    </div>
+    
+
+    <div class="main">
+
+
+        <div class="main1">
+            
+
+            <div class="buttons">
+
+
+                <div>
+                    <form method="post" action="{% url 'Social_Media' %}">
+                        {% csrf_token %}
+
+                        <input type="hidden" value="{{ user.pk }}" name="id_of_user">
+                        <button  class="main1_buttons">
+                            Home
+                        </button>
+                    </form>
+                </div>
+
+
+                    <form method="post" action="{% url 'search' %}">
+                        {% csrf_token %}
+
+                        <input type="hidden" value="{{ user.pk }}" name="id_of_user">
+                        <button class="main1_buttons">
+                            Search
+                        </button>
+                    </form>
+                        
+                    <form method="post" action="{% url 'reels' %}">
+                        {% csrf_token %}
+
+                        <input type="hidden" value="{{ user.pk }}" name="id_of_user">
+                        <button class="main1_buttons">
+                            Reels
+                        </button>
+                    </form>
+                    
+
+                    
+                    <button class="main1_buttons" onclick="openDiv()">
+                        +Create
+                    </button>
+                        
+
+                    
+                    <form method="post" action="{% url 'profile_sub' %}">
+                        {% csrf_token %}
+
+                        <input type="hidden" value="{{ user.pk }}" name="id_of_user">
+                        <button class="main1_buttons">
+                            Profile
+                        </button>
+                    </form>
+
+                </div>
+
+
+                <div style="width: 100%;">   
+
+                <form action="{% url 'logout' %}" method="post" style="width: 100%;">
+                    {% csrf_token %}
+
+                <button class="main1_buttons">
+                    Log Out
+                </button>
+                </form>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="main2">
+
+            <div class="profile">
+
+                <div class="data">
+                    <center>
+                        <img src="{{ profile.profile_picture.url }}" alt="" class="profile_pic">
+                            <br>
+                        <label for="">{{ profile.bio }}</label>
+                    </center>
+                </div>
+
+                <div class="public">
+                    <label style="font-size: x-large;margin: 20px;">
+                       {{ user.username }}
+                    </label>
+                    <br>
+                    <br>
+                
+                    <br>
+                    <br>
+                    <br>
+                        <button style="background-color: transparent;border: transparent;" onclick="view_followers()">
+                            <label for="" style="font-size: x-large;margin: 20px;">{{ profile.followers }}  Followers  </label>
+                        </button>
+                        
+
+
+                        <button onclick="view_following()" style="background-color: transparent;border: transparent;">
+                            <label for="" style="font-size: x-large;margin: 20px;">{{ profile.following }}  Following  </label>
+                        </button>
+                    <label for="" style="font-size: x-large;margin: 20px;">{{ count }}  Posts  </label>
+
+
+                    <br>
+                    <br>
+                    <br>
+
+                    <button onclick="view_edit_profile()" class="main_function_buttons">
+                        Edit Profile
+                    </button>
+
+                    <button onclick="openDiv()" class="main_function_buttons">
+                        Add Post
+                    </button>
+                </div>
+                
+            </div>
+            <br>
+            <hr>
+
+            <div class="post_type_buttons">
+
+
+
+
+                <form action="{% url 'view_all' %}" method="post" style="width: 100%;">
+                    {% csrf_token %}
+
+                    <input type="hidden" value="{{ user.id }}" name="user_id">
+
+
+                    <center>
+                        <button class="post_type_buttons_actual">
+                            All 
+                        </button>
+                    </center>
+                </form>
+
+
+                <form action="{% url 'view_posts' %}" method="post" style="width: 100%;">
+                    {% csrf_token %}
+
+
+                    <input type="hidden" value="{{ user.id }}" name="user_id">
+
+                    <center>
+                        <button class="post_type_buttons_actual">
+                            Posts                            
+                        </button>
+                    </center>
+
+                    </form>    
+
+
+                <form action="{% url 'view_reels' %}" method="post" style="width: 100%;">
+                    {% csrf_token %}
+
+                    <input type="hidden" value="{{ user.id }}" name="user_id">
+
+                    <center>
+                        <button class="post_type_buttons_actual">
+                            Reels
+                        </button>
+                    </center>
+
+                </form>
+                
+
+
+            </div>
+
+            <hr>
+            <br>
+            
+            <div class="display_post">
+
+
+                {% for n in post_of_user %} 
+                <div style="border: 1px solid black;margin: 0%;padding: 0%;">
+              
+                    
+                
+                    <img src="{{ n.post_file.url }}" alt="" id="post">
+
+
+                <div style="width: 100%;border-top:1px solid black">
+                    <form action="{% url 'delete_post' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="user" value="{{ n.post_no_id }}">
+                        <input type="hidden" name="post_id" value="{{ n.pk }}">
+                        <button type="submit">🗑</button>
+                    </form>
+
+                    <p style="margin: 10px;">
+                        {{ n.caption }}
+                    </p>
+                </div>
+
+                   
+                    </div>
+
+                    {% endfor %}
+
+
+
+                    {% for n in reels_of_user %} 
+                <div style="border: 1px solid black;margin: 0%;padding: 0%;">
+              
+                    
+                
+                    <video src="{{ n.reel_video.url }}" alt="" id="reel" type="video/mp4" controls>
+
+                        </video>
+
+
+                <div style="width: 100%;border-top:1px solid black;">
+                    <form action="{% url 'delete_reel' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="user" value="{{  n.reels_no.id }}" style="color: red;">
+                        <input type="hidden" name="post_id" value="{{ n.pk }}" style="color: black;">
+                        <button type="submit">🗑</button>
+                    </form>
+
+                    <p style="margin: 10px;">
+                        {{ n.caption }}
+                    </p> 
+                </div>
+
+                   
+                    </div>
+
+                    {% endfor %}
+
+
+                    
+    
+                    
+                </div>
+                
+        
+
+
+
+
+
+        </div>
+
+        
+
+
+
+
+
+
+        <div class="main3">
+
+
+           
+
+
+
+
+            {% for n in user_except %}
+
+
+
+
+           
+
+                    <div class="friends">
+                    
+                        <div class="info">
+                            <name style="font-size: smaller;">{{ n.first_name}} {{ n.last_name}}</name>
+                            <br>
+
+                            <form action="{% url 'visit_profile' %}" method="post">
+                                {% csrf_token %}
+
+                                <input type="hidden" value="{{ n.pk }}" name="user_id">
+                                <input type="hidden" value="{{ user.pk }}" name="login_user_id">
+
+                                <button style="font-size: x-small;color: grey;background-color: transparent;border: transparent;">
+                                    {{ n.username }}
+                                </button>
+                            </form>
+                        </div>
+
+
+
+                        <div style="display: flex;align-items: center;">
+
+                            <form action="{% url 'unfollow' %}" method="post">
+                                {% csrf_token %}
+
+                                <input type="hidden" name="user_id" value="{{ user.pk }}">
+                                <input type="hidden" name="follow_id" value="{{ n.pk }}">
+
+
+                            <button>
+                                Unfollow
+                            </button>
+
+                            </form>
+
+                            <form action="{% url 'follow' %}" method="post">
+                                {% csrf_token %}
+
+                                <input type="hidden" name="user_id" value="{{ user.pk }}">
+                                <input type="hidden" name="follow_id" value="{{ n.pk }}">
+
+
+                            <button>
+                                Follow 
+                            </button>
+
+
+                            </form>
+                        </div>
+                    </div>
+
+            </form>
+
+
+            {% endfor %}
+
+
+
+  
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="edit_profile" id="view_block" style="display:none;">
+
+        <div class="subblock">
+           
+            <div style="display: flex;justify-content: right;">
+                <button onclick="closeDiv()" class="close">
+                    ❎
+                </button>
+    
+            </div>
+        <form action="{% url 'update_profile' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div style="display: flex;">
+    
+                <div style="padding: 10px;border: 1px solid whitesmoke;">
+                
+                   
+                    <br>
+                    <center>
+                        <input type="hidden" name="profile_id" value="{{ profile.user_id }}">
+                        <img src="{% if profile.profile_picture %}{{ profile.profile_picture.url }}{% else %}static/img/profile.jpg{% endif %}" alt="Profile Picture" class="img_profile">
+                            <br>
+                        <input type="file" class="img_upload" name="profile_photo">
+                    </center>
+                </div>
+                    <div>
+                        <label for="username">Username :</label>
+                        <input type="text" id="username" value="{{ user.username }}" name="username">
+                        <br>
+                        <br>
+                        <hr>
+                        <br>
+                        <label for="bio">Bio :</label>
+                        <textarea id="bio" name="bio">{{ profile.bio }}</textarea>
+                        <br>
+                        <br>
+                        <hr>
+                        <br>
+                        <center>
+    
+                            <button type="submit" onclick="closeDiv()">
+                                Submit
+                            </button>
+                        </center>
+                    </div>
+                </div>
+            </div>
+            
+        </form>
+    
+    </div>
+    
+        <input type="hidden" name="profile_id" value="{{ profile.user_id }}">
+    
+    
+        <div class="post_popup" id="post_popup">
+    
+                <div class="popup_sub">
+    
+                    <div class="post_sub">
+    
+    
+                    <div style="display: flex;justify-content: right;">
+                        <button onclick="closePost()" class="close">
+                            ❎
+                        </button>
+                    </div>
+                    <form action="{% url 'save_posts' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div>
+                            <div style="display: flex; align-items: center; justify-content: space-between;">
+    
+                                <input type="hidden" value="{{ user.pk }}" name="u_id">
+    
+                                <div style="border: 1px solid whitesmoke;">
+                                    <img src="static/img/camera.png" alt="" class="camera_logo">
+                                </div>
+                                <div style="margin: 20px;">
+                                    <label for="post_file">Add Post From Internal :</label>
+                                    <br>
+                                    <input type="file" name="post_file">
+                                    <br><hr><br>
+                                    <label for="caption">Caption :</label>
+                                    <input type="text" name="caption">
+                                    <button type="submit">Upload</button>
+           
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+
+    
+    <div class="view_followers" id="view_followers">
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; width: 100%;">
+            <div class="table">
+                <span style="display: flex; justify-content: right;">
+                    <button onclick="view_followers_close()">❎</button>
+                </span>
+                
+                
+                {% for x in follower %}
+                    <hr>
+                    {{ x.follower_name   }}
+                    <hr>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="view_followers" id="view_following">
+        
+        <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;height: 100%;
+        width: 100%;">
+        <div class="table">
+            <span style="display: flex;justify-content: right;">
+                
+                <button onclick="view_following_close()">
+                    ❎
+                </button>
+            </span>
+            
+            {% for x in following %}
+
+            <hr>
+              {{ x.follower_of_username }}
+
+              <hr>
+
+            {% endfor %}
+        </div>
+    </div>
+
+        
+    </div>
+
+
+
+    
+</body>
+<script src="static/js/home_page.js">
+
+</script>
+</html>

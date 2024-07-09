@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create_User</title>
+    <link rel="stylesheet" href="static/css/user_creation.css">
+</head>
+<body class="container">
+
+    <img src="static/img/login_page.jpeg" alt="" class="login_dull">
+
+    <div class="main">
+
+        <div class="block1">
+    
+            <span>
+            
+
+                    {{ message.text }}
+
+            
+            </span>
+
+            <center>
+                <h2>
+                    Create Account
+                </h2>
+            </center>
+
+            <form action="{% url 'user' %}" method="post">
+                {% csrf_token %}
+                <div class="block">
+                    <div class="name">
+                        <label for="">Name :</label>
+                        <input type="text" name="f_name" placeholder="First Name" required>
+                        <input type="text" name="l_name" placeholder="Last Name" required>
+                    </div>
+
+                    <label for="">Email :</label>
+                    <input type="email" name="email" placeholder="abc123@gmail.com"  required>
+                    <br>
+                    <label for="">Password :</label>
+                    <input type="password" name="pword" required>
+                    <br>
+                    <label for="">Confirm Password :</label>
+                    <input type="password" name="c_pword" required>
+
+                    <br>
+                    
+                    <p style="margin: 10px;">
+                        Already Have An Account,<a href="login"> Sign Up </a>
+                    </p>
+                    <center>
+                        <button type="submit">
+                            Submit
+                        </button>
+                    </center>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</body>
+</html>
